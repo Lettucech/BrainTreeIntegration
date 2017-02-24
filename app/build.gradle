@@ -40,5 +40,7 @@ dependencies {
 	compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
 	compile 'io.card:android-sdk:5.5.0'
 	compile 'com.android.support:design:25.1.0'
+	compile 'com.stripe:stripe-android:2.0.2'
+	compile 'io.card:android-sdk:5.5.0'
 	testCompile 'junit:junit:4.12'
 }

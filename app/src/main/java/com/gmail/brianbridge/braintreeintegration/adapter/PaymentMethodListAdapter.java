@@ -50,6 +50,7 @@ public class PaymentMethodListAdapter extends ArrayAdapter<PaymentMethodNonce> {
 		if (nonce.isDefault()) {
 			description += " (Default)";
 		}
+		description += "\n" + nonce.getNonce().substring(0, 20) + "...";
 
 		viewHolder.imageView.setImageResource(type.getVaultedDrawable());
 		viewHolder.textView.setText(description);

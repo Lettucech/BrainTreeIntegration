@@ -2,6 +2,8 @@ package com.gmail.brianbridge.braintreeintegration;
 
 import android.os.Build;
 
+import com.braintreepayments.api.models.PaymentMethodNonce;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -15,7 +17,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 import rx.Observable;
 
 public class PaymentService {
-	private static String authToken = "RVVSd241UmZZWS9IOWJGMGR2V1RRZz09OmQ1L1N4d21WcDlEaTdxQVVpSHVPN0R5QTZEckZ4WFpORWppZzVkRUNKUUc5SnRwVU9iaVl1SzRvN3YvTm5kQzNhRkZVZTlRZDVTRVoyTEp2SHdqaUx3PT0";
+	private static String authToken = "SkNCVXhzRWcyNTlqZUVHS096eFRXdz09OjBJZ21vZml5a0F6UVVYU2NONjh6VEIwYkFQTzJmVUU2WjNCU3dUZVkzcnJhTzVTck5GUklsRE1waVRBdG0ramViem5EUWNWQWNGZUJoSnZteGFNZlFRPT0";
 	private Retrofit retrofit;
 	private Endpoints endpoints;
 
@@ -57,11 +59,11 @@ public class PaymentService {
 		return endpoints.getClientToken();
 	}
 
-	public Observable<List<BillingAddress>> getAddresses() {
-		return endpoints.listAddresses();
+	public Observable<String> addPaymentMethod(String nonce) {
+		return endpoints.addPaymentMethod(nonce);
 	}
 
-	public Observable<Boolean> checkout(String nonce) {
-		return endpoints.checkout(nonce);
+	public Observable<Boolean> checkout(String nonce, String amount) {
+		return endpoints.checkout(nonce, amount);
 	}
 }

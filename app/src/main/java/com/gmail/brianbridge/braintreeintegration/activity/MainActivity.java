@@ -1,15 +1,18 @@
-package com.gmail.brianbridge.braintreeintegration;
+package com.gmail.brianbridge.braintreeintegration.activity;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.gmail.brianbridge.braintreeintegration.activity.PaymentMethodActivity;
+import com.gmail.brianbridge.braintreeintegration.PaymentService;
+import com.gmail.brianbridge.braintreeintegration.R;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -17,6 +20,7 @@ import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
 	public static final String TAG = MainActivity.class.getSimpleName();
+	public static final int REQUEST_SELECT_METHOD = 100;
 	private String clientToken;
 	private PaymentService paymentService = new PaymentService();
 	private Dialog dialog;
@@ -37,6 +41,28 @@ public class MainActivity extends AppCompatActivity {
 		});
 	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == REQUEST_SELECT_METHOD && resultCode == RESULT_OK) {
+			dialog = new AlertDialog.Builder(this)
+					.setMessage("Use: " + data.getStringExtra("nonce").substring(0, 20) + " to pay?")
+					.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialogInterface, int i) {
+
+						}
+					})
+					.setNegativeButton("No", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialogInterface, int i) {
+							dialog.dismiss();
+						}
+					})
+					.show();
+		}
+	}
+
 	private void getClientToken() {
 		paymentService.getClientToken().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Subscriber<String>() {
@@ -53,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 						dialog.dismiss();
 						Intent intent = new Intent(MainActivity.this, PaymentMethodActivity.class);
 						intent.putExtra(PaymentMethodActivity.BUNDLE_CLIENT_TOKEN, clientToken);
-						startActivityForResult(intent, 1000);
+						startActivityForResult(intent, REQUEST_SELECT_METHOD);
 					}
 
 					@Override

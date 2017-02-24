@@ -9,25 +9,7 @@
 	android:paddingLeft="@dimen/activity_horizontal_margin"
 	android:paddingRight="@dimen/activity_horizontal_margin"
 	android:paddingTop="@dimen/activity_vertical_margin"
-	tools:context="com.gmail.brianbridge.braintreeintegration.MainActivity">
-
-	<EditText
-		android:id="@+id/editText_email"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:hint="login email"
-		android:inputType="textEmailAddress" />
-	<EditText
-		android:id="@+id/editText_password"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:hint="login password"
-		android:inputType="textPassword" />
-	<Button
-		android:id="@+id/btn_login"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="login"/>
+	tools:context="com.gmail.brianbridge.braintreeintegration.activity.MainActivity">
 
 	<Button
 		android:id="@+id/btn_pay"

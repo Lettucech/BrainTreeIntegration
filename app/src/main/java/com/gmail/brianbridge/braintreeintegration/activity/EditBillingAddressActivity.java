@@ -43,43 +43,5 @@ public class EditBillingAddressActivity extends AppCompatActivity {
 //		});
 
 		recentAddressesContainer = (LinearLayout) findViewById(R.id.linearLayout_recentAddressesContainer);
-		fetchRecentAddresses();
-	}
-
-	private void fetchRecentAddresses() {
-		paymentService.getAddresses().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-				.flatMap(new Func1<List<BillingAddress>, Observable<BillingAddress>>() {
-					@Override
-					public Observable<BillingAddress> call(List<BillingAddress> billingAddresses) {
-						return Observable.from(billingAddresses);
-					}
-				})
-				.subscribe(new Subscriber<BillingAddress>() {
-					@Override
-					public void onCompleted() {
-
-					}
-
-					@Override
-					public void onError(Throwable e) {
-
-					}
-
-					@Override
-					public void onNext(BillingAddress billingAddress) {
-						TextView textView = new TextView(EditBillingAddressActivity.this);
-						textView.setText(billingAddress.getStreetAddress());
-						textView.setOnClickListener(new View.OnClickListener() {
-							@Override
-							public void onClick(View view) {
-								Intent intent = new Intent();
-								intent.putExtra("address", ((TextView)view).getText().toString());
-								setResult(RESULT_OK, intent);
-								finish();
-							}
-						});
-						recentAddressesContainer.addView(textView);
-					}
-				});
 	}
 }
